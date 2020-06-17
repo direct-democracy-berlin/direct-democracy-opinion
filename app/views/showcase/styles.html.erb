@@ -1,0 +1,62 @@
+<% content_for :head do %>
+      <%= javascript_pack_tag 'showcase', 'data-turbolinks-track': 'reload' %>
+<% end %>
+<div>
+  <h1>Colors</h1>
+  <h2>Basic</h2>
+  <% %w[primary secondary success warning danger light dark].each do |color| %>
+  <div class="d-inline-flex">
+    <div class="m-2 p-3 bg-<%= color %>">
+      <span><%= color %></span>
+      <br/>
+      <span class="text-light"><%= color %> </span>
+    </div>
+  </div>
+  <% end %>
+
+  <h2>Palette</h2>
+  <div id="palette" ></div>
+
+  <h2>Functions</h2>
+  <h4>Random color</h4>
+  <%= tag :input, type: :text, value: 'some text', id: 'rnd-color-input' %>
+  <div class="d-inline-block bg-color-auto" id="rnd-color">some text</div>
+
+</div>
+
+
+  <h1 class="mt-5">tooltips & popover</h1>
+    <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom">
+      Tooltip on bottom
+    </button>
+    <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-html="true" title="<em>Tooltip</em> <u>with</u> <b>HTML</b>">
+      Tooltip with HTML
+    </button>
+    <!-- https://getbootstrap.com/docs/4.1/components/popovers/ -->
+    <button type="button" class="btn btn-lg btn-danger" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button>
+
+</div>
+
+<script>
+$( document ).ready(function() {
+  var palette_nodes = [];
+  showcase.color.PALETTE_NAMES.forEach(name => {
+    palette_nodes.push($('<div class="bg-' + name + '">' + name + '</div>'))
+  });
+
+  $('#palette').append(palette_nodes);
+
+  $('#rnd-color-input').keyup(function() {
+    var node = $('#rnd-color');
+    node.text($('#rnd-color-input').val());
+    node.removeClass(function(_, classNames) {
+      return classNames.split(' ').filter( function(className) { return className.startsWith('bg-') }).join(' ');
+    });
+    node.addClass('bg-color-auto');
+    showcase.color.init()
+  })
+
+});
+
+
+</script>

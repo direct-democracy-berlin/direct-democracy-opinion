@@ -1,0 +1,14 @@
+<div>
+<%#= link_to '+ New Thesis', new_thesis_path, class: 'btn btn-primary float-right' %>
+</div>
+<%= render 'theses/tags_selector' %>
+<div class="my-5"></div>
+<div class="text-center">
+<% @theses.each do |thesis| %>
+  <%= render 'theses/thesis_in_list', thesis: thesis %>
+<% end %>
+</div>
+
+
+
+

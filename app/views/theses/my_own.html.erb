@@ -1,0 +1,130 @@
+<div>
+</div>
+<div class="row">
+<div class="col-sm-10">
+<%= render 'theses/tags_selector' %>
+</div>
+<div class="col-sm-2">
+
+<%= link_to '+ New Thesis', new_thesis_path, class: 'btn btn-primary float-right' %>
+
+</div>
+</div>
+
+<%# spacer for results %>
+<div class="my-5"></div>
+<% if @theses.any? %>
+  <div class="text-center">
+    <% @theses.each do |thesis| %>
+      <%= render 'theses/thesis_in_list', thesis: thesis %>
+    <% end %>
+  </div>
+<% else %>
+<div class="text-center">
+<h5>
+  My oh my! You don't seem to have any thesis yet 🤦!<br>
+  <br>
+  Worry not, fot that can be very easily changed!<br>
+  <br>
+  See the <span class="btn btn-primary" id="mock_button">+ New Thesis</span> up there?<br>
+  <br>
+  Go on, click it!
+</h5>
+</div>
+<script>
+$('#mock_button').on('click', function(e) {
+  var count = e.currentTarget._count || 0;
+  e.currentTarget._count = count + 1;
+  var title, content, button;
+  switch (count) {
+    case 0:
+      title = 'Nope'
+      body = 'Too simple to be true?<br><br>Just try again, is the other button that looks like the one you\'ve just pressed...'
+      button = '<button type="button" class="btn btn-primary" data-dismiss="modal" >Ok</button>'
+      break;
+    case 1:
+      title = 'Still not it'
+      body = 'Is the "other" other button that looks like the one you just pressed...'
+      button = '<button type="button" class="btn btn-primary" data-dismiss="modal" >Try again...</button>'
+      break;
+    case 2:
+      title = 'Still not it'
+      body = 'the OTHER...<br>'
+        + '<br>.. not THIS ONE BUT THE OTHER... capisci?'
+      button = '<button type="button" class="btn btn-primary" data-dismiss="modal" >And again...</button>'
+      break;
+    case 3:
+      title = '...'
+      body = 'Is this a joke to you? can you please just click on the other button?'
+      button = '<button type="button" class="btn btn-primary" data-dismiss="modal" >I will behave</button>'
+      break;
+    case 4:
+      title = 'Come on!'
+      body = 'Ok, fun is over move on...'
+      button = '<button type="button" class="btn btn-primary" data-dismiss="modal">Sure</button>'
+      break;
+    case 5:
+      title = '...'
+      body = 'Ok, fun is over <b>move</b> on...'
+      button = '<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>'
+      break;
+    case 6:
+      title = '...'
+      body = 'Ok, fun is over <span style="font-size:125%"><b>move</b></span> on...'
+      button = '<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>'
+      break;
+    case 7:
+      title = 'Boring...'
+      body = "I'm not talking to you anymore"
+      button = '<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>'
+      break;
+    case 8:
+    case 9:
+    case 10:
+    case 11:
+      title = 'The silent treatment'
+      body = '...' + '...'.repeat(count - 8)
+      button = '<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>'
+      break;
+    case 12:
+      title = '... Trying inverse psychology'
+      body = "Please click on the same button you've just clicked. Just once more"
+      button = '<button type="button" class="btn btn-primary" data-dismiss="modal">Sure I\'ll do</button>'
+      break;
+    case 13:
+      title = 'Inverse psychology is broken'
+      body = "We can't be doing this all day, I'm warning you."
+      button = '<button type="button" class="btn btn-primary" data-dismiss="modal">Of course</button>'
+      break;
+    case 14:
+      title = 'Warning'
+      body = "I'm gettting tried of writning theses things... last warniing my friend,"
+      button = '<button type="button" class="btn btn-primary" data-dismiss="modal">Ok, sorry</button>'
+      break;
+    case 15:
+    case 16:
+    case 17:
+    case 18:
+      title = 'Warning ' + (count - 13)
+      body = "I'm gettting " + "really ".repeat(count - 14) + "tried of writning theses things... last warniing my friend,"
+      button = '<button type="button" class="btn btn-primary" data-dismiss="modal">Ok, sorry</button>'
+      break;
+    default:
+      title = 'End of the line'
+      body = "I hope you're happy. Now is broken..."
+      button = '<button type="button" class="btn btn-primary" data-dismiss="modal">...</button>'
+      $('#mock_button').addClass('disabled');
+      $('#mock_button').unbind();
+      break;
+  }
+  $('#the_modal .modal-title').text(title)
+  $('#the_modal .modal-body').html(body)
+  $('#the_modal .modal-footer').html(button)
+  $('#the_modal').modal('show');
+})
+</script>
+<% end %>
+
+
+
+

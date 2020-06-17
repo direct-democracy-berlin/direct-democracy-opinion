@@ -1,0 +1,28 @@
+
+<% content_for :head do %>
+      <%= javascript_pack_tag 'admin', 'data-turbolinks-track': 'reload' %>
+<% end %>
+<table class="table">
+<tr>
+<th>id</th>
+<th>name</th>
+<th>email</th>
+<th class="text-center">admin?</th>
+<th class="text-center">confirmed?</th>
+<th></th>
+</tr>
+<% @users.each do |user| %>
+<tr>
+  <td><%= user.id %></td>
+  <td><%= e user, :name, url: admin_user_path(user) %></td>
+  <td><%= e user, :email, url: admin_user_path(user)%></td>
+  <td class="text-center"><input class="form-check-input" type="checkbox" value="" disabled <%= 'checked' if user.admin? %>> </td>
+  <td class="text-center"><input class="form-check-input" type="checkbox" value="" <%= 'checked' if user.confirmed? %>> </td>
+  <td>
+  <%= link_to admin_user_path(user), method: :delete, class: 'text-danger', data: { confirm: 'you sure?' } do%>
+    <i class="fas fa-trash"></i>
+  <% end %>
+  </td>
+</tr>
+<% end %>
+</table>

@@ -1,0 +1,11 @@
+<%= form_with url: send_confirmation_register_path, local: true do |form| %>
+  <div class="form-group">
+    <%= form.label :email, class: 'text-muted' %>
+    <%= form.text_field :email, class: "form-control #{'is-invalid' if @errors && @errors[:unconfirmed_email].present?}", value: current_user.unconfirmed_email%>
+    <% if @errors&.any? %>
+      <small><span class="text-danger"><%= @errors.full_messages_for(:unconfirmed_email).join(', ') %> </span></small>
+    <% end %>
+  </div>
+  <%= form.submit 'Send confirmation email', class: 'btn btn-primary' %>
+  <%= link_to 'Go back', theses_path, class: 'btn btn-secondary float-right' %>
+<% end %>

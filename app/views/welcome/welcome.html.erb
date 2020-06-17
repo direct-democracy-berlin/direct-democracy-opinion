@@ -1,0 +1,32 @@
+<div class="text-center">
+  <h1>Welcome to D²O!</h1>
+  <small><div class="text-muted">D²O: direct democracy opinion</div></small>
+</div>
+<div class="mt-5">
+    <h5>
+    This site is a prototype of a tool designed to give and request opinions about whatever you choose.<br>
+    <div class="text-center my-3">
+    The universal income 💸 will solve povertry<br>
+    Colonizing Mars 🚀 is the next step for humanity<br>
+    </div>
+    🗳️ Just share your theses and vote!
+    </h5>
+
+    <div class="my-3">
+    <h5>
+      What makes this tool special is its simplicity and the <%= link_to 'democratic approach', info_path(anchor: :democratic_approach) %>.
+      By the way, the tool work on <%= link_to 'Theses', info_path(anchor: :theses) %>.
+    </h5>
+    </div>
+
+  <div class="text-center">
+      <h5 class="mt-5 mb-3">This is how a <%= link_to 'Thesis', info_path(anchor: :theses) %> looks like 👇</h5>
+      <%= render 'theses/thesis_in_list', thesis: @welcome_thesis %>
+      <h5>Go on, click on it!</h5>
+      <div>It won't bite I promise!</div>
+
+  </div>
+
+<div>
+  </div>
+</div>

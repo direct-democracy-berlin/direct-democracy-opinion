@@ -1,0 +1,111 @@
+<% tutorial = !current_user.tutorial_first_thesis %>
+<div class="container-md mt-md-5">
+<h1>I think...</h1>
+<%= form_with model: @thesis, local: true do |form| %>
+  <% if @thesis.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@thesis.errors.count, "error") %> prohibited
+        this article from being saved:
+      </h2>
+      <ul>
+        <% @thesis.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :title, class: 'text-muted' %><br>
+    <%= form.text_field :title, class: 'form-control' %>
+    <% if tutorial %><span class="text-info" id="info_title"></span><% end %>
+
+  </div>
+
+  <div class="form-group">
+    <%= form.label :description, class: 'text-muted'  %><br>
+    <%= form.text_area :description, class: 'form-control', rows: '5' %>
+    <% if tutorial %><span class="text-info" id="info_description"></span><% end %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :tags, class: 'text-muted'  %><br>
+    <%= form.text_field :all_tags, class: 'form-control' %>
+    <% if tutorial %><span class="text-info" id="info_all_tags"></span><% end %>
+  </div>
+
+  <%= form.submit class: 'btn btn-primary' %>
+  <%= link_to 'Go back', theses_path, class: 'btn btn-secondary float-right' %>
+
+
+<% end %>
+</div>
+
+<% if tutorial %>
+  <script>
+  $('#the_modal .modal-title').text("easy-peasy!")
+  $('#the_modal .modal-body').html('Now, theses have a trick! They are not questions!<br>'
+    + '(Though <span class="font-italic">theses</span> the question! 🤡)<br><br>'
+    + 'Theses are just assertions, propositions or claims.<br>'
+    + 'So the main idea is to share what you think about something.<br>'
+    + 'Who knows... maybe you are not the only one 👽!<br><br>'
+    + 'Just write something in the title of the thesis<br>'
+    + "Don't worry I'll help you all along<br><br>"
+    + '(Uhh... wait! <a href="<%= info_path(anchor: :theses) %>" target="blank_">What are theses again?</a>)<br><br>')
+  $('#the_modal .modal-footer').html('<button type="button" onclick="step_1()" class="btn btn-primary" data-dismiss="modal" >I think, ergo I thesis 🦉!</button>')
+  $('#the_modal').modal('show');
+  $('input#thesis_title').on('keyup', function(e){
+    var textSoFar =$('input#thesis_title').val();
+    var key = e.key;
+    if (textSoFar.includes('?')) {
+      $('#info_title').text("You sure you're writing a thesis? That looks more like a question to me...")
+    } else if (textSoFar.length == 0) {
+      $('#info_title').text('Just start writing ✍️ something you think about and seems important to you.')
+    } else if (textSoFar.length > 10) {
+      $('#info_title').html('When you are ready just click here <span onclick="step_2()" class="btn btn-primary btn-sm">done</span> (so I know you are ready...)')
+    } else if (textSoFar.length > 1) {
+      $('#info_title').text('Perfect! Go on...')
+    }
+  })
+  // init
+  $('#thesis_description, #thesis_all_tags, :input[type=submit]').prop('disabled', true);
+  function step_1() { $('input#thesis_title').keyup(); }
+  function step_2() {
+    $('#info_title').text('');
+    $('#thesis_title').prop('disabled', true);
+    $('#thesis_description').prop('disabled', false);
+    $('#info_description').html("If you think, you need to provide a description go on. But you don't need to... "
+     + 'tell me when you are ready by clicking <span onclick="step_3()" class="btn btn-primary btn-sm">done</span>');
+  }
+  function step_3() {
+    $('#info_description').text('');
+    $('#thesis_description').prop('disabled', true);
+    $('#thesis_all_tags').prop('disabled', false);
+    $('#info_all_tags').html("These are usefull for finding theses. Is like a one-word category and you can assign many of them."
+     + "you may use dashes, but no spaces I'm afraid."
+     + "<br>Try something like: tutorial,first-time<br>"
+     + 'When ready, you know the drill! <span onclick="step_4()" class="btn btn-primary btn-sm">I\'m done!</span>');
+  }
+  function step_4() {
+    $('#the_modal .modal-title').text("Well, that was somethin'...")
+    $('#the_modal .modal-body').html('A little more work than voting, right?<br>'
+      + "No worries, soon of it you'll get the hang<br>"
+      + "(sorry got to rhyme that one 🤷)<br><br>"
+      + "Now all that's left is to post it by clicking on the 'Create Thesis' button<br>"
+      + "I've guide you through the first one, I'm living you now on your own!<br><br>"
+      + "With great power 💪 comes great responsibility!<br>"
+      + "(Who wrote that?! Not me! Must have been a bug or something 🕷️)<br><br>"
+      + "Thanks for your patience! ❤️ Enjoy the rest of the ride !")
+    $('#the_modal .modal-footer').html('<button type="button" onclick="step_5()" class="btn btn-primary" data-dismiss="modal" >🎢 Ride on!</button>')
+    $('#the_modal').modal('show');
+  }
+  function step_5() {
+    $('#thesis_title, #thesis_description, #thesis_all_tags, :input[type=submit]').prop('disabled', false);
+    $('#info_all_tags').text('');
+    $('input#thesis_title').unbind();
+
+    $.ajax({ url: '<%= finish_tutorial_path(id: 'first_thesis') %>', type: 'POST' });
+  }
+  </script>
+<% end %>

@@ -1,0 +1,16 @@
+<h1 >Hi, <%= @real_user.name %></h1>
+<br>
+<p>
+  Someone tried to register a new device to your account.
+
+  If you requested this action, please confirm it by following this link:
+</p>
+<br>
+<div class="text-center">
+<%= link_to 'Add new Device', merge_new_device_register_url(token:@token), class: 'btn btn-primary' %><br>
+</div>
+<br>
+
+<p>
+  Otherwise, you don't need to do anything! (just delete this email and never click on a link in an email you haven't requested!)
+</p>

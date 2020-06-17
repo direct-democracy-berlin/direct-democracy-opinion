@@ -1,0 +1,40 @@
+<%
+  user_vote = thesis.vote_of(current_user)
+  link ||= thesis_path(thesis);
+%>
+
+<%= link_to link, class: 'text-decoration-none' do %>
+<div class="d-inline-flex m-2 rounded shadow-sm border">
+
+  <div style="width:15em;height:10em;position:relative;overflow:hidden;">
+    <!-- top -->
+    <div class="bg-secondary mb-3 px-1 text-left d-flex">
+      <div class="ml-1 mr-auto">
+        &nbsp;<%# don't let it collapse %>
+        <% if thesis.creator == current_user %>
+            <small>
+              <span class="text-dark" data-toggle="tooltip" title='your thesis!'><i class="fas fa-user" ></i></span>
+            </small>
+        <% end %>
+      </div>
+      <div class="">
+        <small>
+          <% Vote.votes.each do |vote, _| %>
+            <i class="mx-1 fas <%= Vote.vote_to_icon vote %> text-<%= (user_vote && user_vote.voted?(vote)) ? 'dark' : 'light' %>"></i>
+          <% end %>
+        </small>
+
+      </div>
+    </div>
+
+    <div class="h4 text-center text-dark px-3">
+        <%= thesis.title %>
+    </div>
+
+    <!-- tags turned off -->
+    <div class="m-1" style="position:absolute;bottom:0px">
+      <%#= render 'theses/tags', tags: thesis.tags %>
+    </div>
+  </div>
+</div>
+<% end %>

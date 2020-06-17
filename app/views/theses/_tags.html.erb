@@ -1,0 +1,10 @@
+<%#
+tags: all tags
+%>
+<% tags.each do |tag| %>
+  <%= link_to show_of_tags_theses_path(tag:tag.name) do %>
+    <span class="badge bg-color-auto border text-dark">
+      <%= tag.name %>
+    </span>
+  <% end %>
+<% end %>

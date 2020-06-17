@@ -1,0 +1,44 @@
+<%#
+thesis: the thesis object being displayed (req)
+%>
+<div class="container-lg bg-light mt-md-5">
+
+  <blockquote class="blockquote px-md-5 py-5">
+    <p>
+      <h1 class="text-center">
+        <i class="fas fa-quote-right text-secondary mr-2"></i>
+        <%= thesis.title %>
+      </h1>
+    </p>
+    <%= render 'theses/tags', tags: thesis.tags %>
+    <p class="mt-5">
+      <%= thesis.description %>
+    </p>
+    <% if thesis.creator == current_user %>
+      <%= link_to edit_thesis_path(thesis), class: 'btn float-right' do %>
+      <i class="fas fa-edit"></i>
+      <% end %>
+    <% end %>
+  </blockquote>
+
+</div>
+
+
+<style>
+
+.blockquote {
+    position: relative;
+}
+
+
+.blockquote::after {
+    content: "";
+    top: 20px;
+    left: 50%;
+    margin-left: -100px;
+    position: absolute;
+    border-bottom: 3px solid #bf0024;
+    height: 3px;
+    width: 200px;
+}
+</style>

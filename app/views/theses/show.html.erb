@@ -1,0 +1,19 @@
+<%= render 'theses/quote', thesis: @thesis %>
+
+<%= render 'theses/vote', thesis: @thesis %>
+
+<div class="container mt-5 text-center">
+  <%= link_to 'Just show results', results_thesis_path(@thesis), class: 'text-secondary' %> |
+  <%= link_to random_theses_path(current: @thesis.id) do %>
+    <i class="fas fa-dice text-dark"></i>
+  <% end %>
+</div>
+
+<% if !current_user.tutorial_welcome && @thesis.system_template == 'welcome' %>
+  <script>
+  $('#the_modal .modal-title').text("That's easy!")
+  $('#the_modal .modal-body').html("Now the only thing left is to cast your vote 🗳️!<br><br>What will it be? 😱")
+  $('#the_modal .modal-footer').html('<button type="button" class="btn btn-primary" data-dismiss="modal">🏃Go on and vote!</button>')
+  $('#the_modal').modal('show');
+  </script>
+<% end %>

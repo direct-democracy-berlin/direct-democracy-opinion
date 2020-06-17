@@ -1,0 +1,11 @@
+<h2>Profile</h2>
+<% unless current_user.confirmed? %>
+Anonym
+<% end %>
+<%= form_with url: profile_path, method: :patch, local: true do |form| %>
+<div class="form-group">
+    <%= f(form, :name) %>
+    <%= f(form, :email) %>
+
+  <%= form.submit 'Save', class: 'btn btn-primary' %>
+<% end %>

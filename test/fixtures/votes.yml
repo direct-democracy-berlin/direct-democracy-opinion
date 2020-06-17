@@ -1,0 +1,36 @@
+# == Schema Information
+#
+# Table name: votes
+#
+#  id         :bigint           not null, primary key
+#  vote       :string           not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  thesis_id  :bigint           not null
+#  user_id    :bigint           not null
+#
+# Indexes
+#
+#  index_votes_on_thesis_id              (thesis_id)
+#  index_votes_on_user_id                (user_id)
+#  index_votes_on_user_id_and_thesis_id  (user_id,thesis_id) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (thesis_id => theses.id) ON DELETE => cascade
+#  fk_rails_...  (user_id => users.id) ON DELETE => cascade
+#
+anonym_one_up:
+  user: anonym
+  thesis: one
+  vote: 'up'
+
+anonym_two_down:
+  user: anonym
+  thesis: two
+  vote: 'down'
+
+registered_two_up:
+  user: registered
+  thesis: two
+  vote: 'up'

@@ -1,0 +1,57 @@
+<%= render 'theses/quote', thesis: @thesis %>
+
+<%
+min_percentage = 10
+up_width = (@thesis.percentage_up * (100 - min_percentage * 3)).to_i  + min_percentage
+down_width = (@thesis.percentage_down * (100 - min_percentage * 3)).to_i + min_percentage
+neutral_width = 100 - up_width - down_width
+%>
+
+<div class="container-md mt-5 text-center">
+<div class="row text-light h2">
+<div class="col bg-success rounded-left p-3" style="max-width:<%= up_width %>%;min-width:3em">
+  <% if @vote&.up? %>
+    <small><span data-toggle="tooltip" title='your vote'><i class="fas fa-user" ></i></span></small>
+  <% end %>
+
+  <%= @thesis.votes_up %>
+  <br>(<%= percentage (@thesis.percentage_up) %>)
+</div>
+<div class="col bg-secondary p-3" style="max-width:<%= neutral_width %>%;min-width:3em">
+  <% if @vote&.neutral? %>
+    <small><span data-toggle="tooltip" title='your vote'><i class="fas fa-user" ></i></span></small>
+  <% end %>
+
+  <%= @thesis.votes_neutral %>
+  <br>(<%= percentage (@thesis.percentage_neutral) %>)
+</div>
+<div class="col bg-danger rounded-right p-3" style="max-width:<%= down_width %>%;min-width:3em">
+  <% if @vote&.down? %>
+    <small><span data-toggle="tooltip" title='your vote'><i class="fas fa-user" ></i></span></small>
+  <% end %>
+
+  <%= @thesis.votes_down %>
+  <br>(<%= percentage (@thesis.percentage_down) %>)
+</div>
+</div>
+<div class="text-muted">
+Total of votes: <%= @thesis.total_votes%>
+</div>
+</div>
+
+<div class="container mt-5 text-center">
+  <%= link_to 'Show All', theses_path , class: 'text-secondary' %> |
+  <%= link_to random_theses_path do %>
+    <i class="fas fa-dice text-dark"></i>
+  <% end %>
+</div>
+
+<% if !current_user.tutorial_welcome && @thesis.system_template == 'welcome' %>
+  <script>
+  $('#the_modal .modal-title').text("That's easy!")
+  $('#the_modal .modal-body').html("Well done! Your vote does matter! (<a href='<%= info_path(anchor: :voting) %>' target='blank_'>why?!</a>)<br><br>That's it, now go on and explore the site 🧭!")
+  $('#the_modal .modal-footer').html('<button type="button" class="btn btn-primary" data-dismiss="modal" >Then... 🕺let me!</button>')
+  $('#the_modal').modal('show');
+  $.ajax({ url: '<%= finish_tutorial_path(id: 'welcome') %>', type: 'POST' });
+  </script>
+<% end %>
