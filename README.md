@@ -4,6 +4,8 @@ This project is one of a set of projects around direct democracy.
 
 This tool is designed to help people present Thesis and allow others to give their opinion on them.
 
+If you want to see it working, ping me and I'll give you the adress.
+
 # Getting the system running
 Need a postgress DB as defined in [database.yml](config/database.yml)
 ```
@@ -32,4 +34,4 @@ This description is very brief. If you need help just ping me, it would be a goo
 
 # What's next?
 
-Just contact me
+Just contact me if you have any interest.
